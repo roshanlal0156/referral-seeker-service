@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserStatusEnum;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -19,9 +20,9 @@ class User extends Authenticatable  implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'mobile',
         'password',
+        "username"
     ];
 
     /**
@@ -41,6 +42,7 @@ class User extends Authenticatable  implements JWTSubject
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'status' => UserStatusEnum::class,
     ];
 
 

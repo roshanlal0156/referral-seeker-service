@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Api\BaseApiController;
+use App\Http\Controllers\RestResponse;
 use App\Http\Requests\Auth\UserLoginRequest;
 use App\Http\Requests\Auth\UserRegistrationRequest;
 use Illuminate\Http\Request;
@@ -30,30 +31,22 @@ class AuthApiController extends BaseApiController
     /**
      * Get a JWT via given credentials.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return RestResponse
      */
     public function login(UserLoginRequest $request)
     {
         $token = $this->authService->login($request->getData());
-        return response()->json([
-            'success' => true,
-            'message' => 'User successfully registered',
-            'data' => $token
-        ], 201);
+        return RestResponse::done("data", $token);
     }
     /**
      * Register a User.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return RestResponse
      */
     public function register(UserRegistrationRequest $request)
     {
         $user = $this->authService->register($request->getData());
-        return response()->json([
-            'success' => true,
-            'message' => 'User successfully registered',
-            'data' => ['user' => $user]
-        ], 201);
+        return RestResponse::successResponse(["message" => "User registered successfully.", "user" => $user]);
     }
 
     public function test()

@@ -25,7 +25,7 @@ class UserLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'string', 'regex:/(.+)@(.+)\.(.+)/i'],
+            'mobile' => ['required', 'string', 'regex:/^[6-9]\d{9}$/'],
             'password' => ['required', 'string'],
 
         ];
@@ -39,7 +39,7 @@ class UserLoginRequest extends FormRequest
     public function getData()
     {
         $data = new Collection();
-        $data->put('email', $this->get('email'));
+        $data->put('mobile', $this->get('mobile'));
         $data->put('password', $this->get('password'));
 
         $data = $this->filterFiles($data);

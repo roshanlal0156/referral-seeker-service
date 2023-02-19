@@ -27,7 +27,8 @@ class UserService
      */
     public function store(Collection $data)
     {
-        return $this->userRepository->store($data);
+        $user = $this->userRepository->store($data);
+        return collect(["id" => $user->id, "username" => $user->username, "mobile" => $user->mobile]);
     }
 
     /**
@@ -40,5 +41,29 @@ class UserService
     public function findByEmail(string $email)
     {
         return $this->userRepository->findByEmail($email);
+    }
+
+    /**
+     * find by mobile
+     *
+     * @param string $mobile
+     *
+     * @return User
+     */
+    public function findByMobile(string $mobile)
+    {
+        return $this->userRepository->findByMobile($mobile);
+    }
+
+    /**
+     * find by username
+     *
+     * @param string $username
+     *
+     * @return User
+     */
+    public function findByUsername(string $username)
+    {
+        return $this->userRepository->findByUsername($username);
     }
 }

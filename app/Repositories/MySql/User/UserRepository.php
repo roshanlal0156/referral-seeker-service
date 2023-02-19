@@ -21,7 +21,7 @@ class UserRepository implements UserRepositoryInterface
     {
         $userData = collect($this->formFields($data));
 
-        if (!Utils::containsAll($userData, ["name", "email", "password"])) {
+        if (!Utils::containsAll($userData, ["mobile", "password", "username"])) {
             throw new Exception("Data field missing");
         }
 
@@ -44,6 +44,30 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
+     * find by mobile
+     *
+     * @param string $mobile
+     *
+     * @return User
+     */
+    public function findByMobile(string $mobile)
+    {
+        return User::where(["mobile" => $mobile, "status" => "active"])->first();
+    }
+
+    /**
+     * find by username
+     *
+     * @param string $username
+     *
+     * @return User
+     */
+    public function findByUsername(string $username)
+    {
+        return User::where(["username" => $username, "status" => "active"])->first();
+    }
+
+    /**
      * form feilds
      *
      * @param Collection $data
@@ -60,6 +84,14 @@ class UserRepository implements UserRepositoryInterface
 
         if ($data->has("email")) {
             $result->put("email", $data->get("email"));
+        }
+
+        if ($data->has("mobile")) {
+            $result->put("mobile", $data->get("mobile"));
+        }
+
+        if ($data->has("username")) {
+            $result->put("username", $data->get("username"));
         }
 
         if ($data->has("password")) {

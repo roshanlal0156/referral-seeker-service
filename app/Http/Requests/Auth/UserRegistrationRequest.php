@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Rules\IsPasswordStrong;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Collection;
 
@@ -25,10 +26,8 @@ class UserRegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'regex:/(.+)@(.+)\.(.+)/i'],
-            'password' => ['required', 'string'],
-
+            'mobile' => ['required', 'string', 'regex:/^[6-9]\d{9}$/'],
+            'password' => ['required', 'string', new IsPasswordStrong()],
         ];
     }
 
@@ -40,8 +39,7 @@ class UserRegistrationRequest extends FormRequest
     public function getData()
     {
         $data = new Collection();
-        $data->put('name', $this->get('name'));
-        $data->put('email', $this->get('email'));
+        $data->put('mobile', $this->get('mobile'));
         $data->put('password', bcrypt($this->get('password')));
 
         $data = $this->filterFiles($data);

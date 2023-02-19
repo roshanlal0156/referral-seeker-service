@@ -23,4 +23,22 @@ interface UserRepositoryInterface
      * @return User
      */
     public function findByEmail(string $email);
+
+    /**
+     * find by mobile
+     *
+     * @param string $mobile
+     *
+     * @return User
+     */
+    public function findByMobile(string $mobile);
+
+    /**
+     * find by username
+     *
+     * @param string $username
+     *
+     * @return User
+     */
+    public function findByUsername(string $username);
 }
